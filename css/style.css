@@ -1,0 +1,29 @@
+ul{
+     list-style-type: none;
+     margin: 0;
+     overflow: hidden;
+     background-color: #971d24;
+     position:fixed;
+     top:0;
+     left:0;
+     width:100%;
+     /*min-height: 50px;*/
+
+}
+
+@media screen and (min-width: 600px) {
+  .ul {
+    width: 120px;
+    border-bottom: none;
+    height: 50px;
+    line-height: 50px;
+    font-size: 1.4em;
+  }
+
+  img{
+    float: right;
+    min-width: 200px;
+    height:80px;
+    overflow: hidden;
+    margin-right: 80px;
+  }
