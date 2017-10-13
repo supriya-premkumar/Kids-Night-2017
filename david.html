@@ -1,0 +1,138 @@
+<HTML>
+<BODY ONLOAD="init();">
+
+<STYLE>
+#slider {
+    width: 100%;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 25px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+}
+</STYLE>
+
+<TABLE>
+<TR><TH ALIGN=LEFT>Frequency</TH><TD></TD><TD ALIGN=LEFT WIDTH=50><DIV ID=freq>...</DIV></TD><TD ALIGN=LEFT>Hz</TD></TR>
+<TR><TH ALIGN=LEFT>Profit</TH><TD ALIGN=RIGHT>$</TD><TD ALIGN=LEFT><DIV ID=score>...</DIV></TD></TR>
+<TR><TH ALIGN=LEFT>Throttle</TH><TD ALIGN=RIGHT><DIV ID=power>...</DIV><TD ALIGN=LEFT>%</DIV><TD><DIV ID="slider"><INPUT TYPE="range" MIN="1" MAX="100" VALUE="50" CLASS="slider" ID="throttle"></DIV></TD></TR>
+<TR><TH ALIGN=LEFT>Auto</TH><TD><INPUT TYPE=CHECKBOX ONCLICK="autocheck();" /></TD><TD><INPUT TYPE=RESET ONCLICK="reset();" /></TD></TR>
+</TABLE>
+
+
+<SCRIPT type="text/javascript">
+	var	count = 0;
+	var	K1 = 0.24;
+	var	K2 = 0.50;
+	var	K3 = 0.25;
+	var	K4 = 0.00;
+	var	K5 = 0.00;
+	var	Kg = 0.001;
+	var	R = 0.05;
+	var	M = 10;
+	var	Af = 0.9048;
+	var	Bf = 0.25;
+	var	Cf = 0.3828;
+	var	Df = 0.0476;
+	var	Kd = 0.002;
+	var	Xf = 0;
+	var	f = 0;
+	var	Pe = 100;
+	var	Pr = 10;
+	var 	throttle = 0.5;
+	var	score = 0;
+	var 	Ce = 0;
+	var	pg = 0.5;
+	var	Xg = 0.5;
+	var	Ag = 0;
+	var	Bg = 0;
+	var	Cg = 0;
+	var	Dg = 1;
+	var	auto = 0;
+	var 	pe = 0;
+	var	B = 0;
+	function randn() 
+	{
+		var u = 0, v = 0;
+		while (u === 0) u = Math.random();
+		while (v === 0) v = Math.random();
+		return Math.sqrt( -2.0 * Math.log( u ) ) * Math.cos( 2.0 * Math.PI * v );
+	}	
+	function init()
+	{
+		setTimeout("init()",1000);
+		update();
+	}
+	function update()
+	{
+		var u = -f/R;
+		throttle = document.getElementById("throttle").value/100 - 0.5;
+
+		pg = Cg*Xg + Dg*(auto*u+throttle);
+		Xg = Ag*Xg + Bg*(auto*u+throttle);
+
+		var p = Kg*pg + Kd*randn();
+		f = Cf*Xf + Df*p;
+		Xf = Af*Xf + Bf*p;
+
+		var pe0 = pe;
+		pe = pg + B*f;
+		Ce = Ce + Kg*pe/3600.0*Pe;
+		Cr = -f*Kg*(pe-pe0)*3600.0*Pr;
+		score = score + Ce + Cr;
+		document.getElementById("freq").innerHTML = Math.round((f+1)*60*1000)/1000;
+		document.getElementById("score").innerHTML = Math.round(score*100)/100;
+		document.getElementById("power").innerHTML = Math.round(throttle*100+50);
+		count = count + 1;
+	}
+	function reset()
+	{
+		score = 0;
+		Xf = 0;
+		slider.value = 50;
+	}
+	var slider = document.getElementById("throttle");
+	slider.oninput = function() 
+	{
+		document.getElementById("power").innerHTML = this.value;
+	}
+	function autocheck()
+	{
+		if ( document.getElemendById("auto").checked == true )
+		{
+			auto = 1;
+		}
+		else
+		{
+			auto = 0;
+		}
+	} 
+
+</SCRIPT>
+</BODY>

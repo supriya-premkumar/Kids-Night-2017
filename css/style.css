@@ -1,5 +1,5 @@
 body{
-  background: #fafafa
+  background: #93d6f4
 }
 
 ul{
@@ -31,8 +31,6 @@ ul{
     overflow: hidden;
     margin-right: 80px;
   }
-
-/*center-mode : Game Levels*/
 
 .slider{
   margin-left: 200px;
