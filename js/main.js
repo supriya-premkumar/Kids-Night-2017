@@ -1,8 +1,48 @@
 function openWindow(){
+  var level
+  if (document.getElementById('easy').checked){
+    level = "easy";
+  };
+  if (document.getElementById('medium').checked){
+    level = "medium";
+  };
+  if (document.getElementById('difficult').checked){
+    level = "hard";
+  };
+
+  var throttle=60;
+  var xhr = new XMLHttpRequest();
+  var url = "http://localhost:8080";
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-type", "application/json");
+  xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        var json = JSON.parse(xhr.responseText);
+        console.log(json);
+    }
+  };
+var data = JSON.stringify({"throttle": throttle, "difficulty_level": level});
+xhr.send(data);
+
+  // xhr.open("POST", "localhost:8080", true);
+  // xhr.setRequestHeader('Content-Type', 'application/json');
+  // xhr.send(JSON.stringify({
+  //   throttle=throttle,
+  //   difficulty_level=level
+  // }));
+  //
+  // xhr.onload = function() {
+  //   console.log("BLAH");
+  //   console.log(this.responseText);
+  //   var data = JSON.parse(this.responseText);
+  //   console.log(data);
+  // }
+
+  console.log(level);
   window.open("../html/output.html");
-  // myWindow=window.open('','','width=200,height=100');
-  //           myWindow.document.write("<p>This is 'myWindow'</p>");
-  //           myWindow.focus();
 }
 
 var dial = $(".dial .inner");
