@@ -12,36 +12,19 @@ function openWindow(){
 
   var throttle=60;
   var xhr = new XMLHttpRequest();
-  var url = "http://localhost:8080";
+  var url = "http://127.0.0.1:8080";
 
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
   xhr.setRequestHeader("Content-type", "application/json");
-  xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
         var json = JSON.parse(xhr.responseText);
         console.log(json);
     }
   };
-var data = JSON.stringify({"throttle": throttle, "difficulty_level": level});
-xhr.send(data);
-
-  // xhr.open("POST", "localhost:8080", true);
-  // xhr.setRequestHeader('Content-Type', 'application/json');
-  // xhr.send(JSON.stringify({
-  //   throttle=throttle,
-  //   difficulty_level=level
-  // }));
-  //
-  // xhr.onload = function() {
-  //   console.log("BLAH");
-  //   console.log(this.responseText);
-  //   var data = JSON.parse(this.responseText);
-  //   console.log(data);
-  // }
-
-  console.log(level);
+  var data = JSON.stringify({"throttle": throttle,"difficulty_level": level,"reset":true});
+  xhr.send(data);
   window.open("../html/output.html");
 }
 

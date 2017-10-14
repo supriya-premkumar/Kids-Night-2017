@@ -18,11 +18,15 @@ class S(BaseHTTPRequestHandler):
     def _set_headers(self):
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header("Access-Control-Expose-Headers", "Access-Control-Allow-Origin")
+        self.send_header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
         self.end_headers()
 
     def do_POST(self):
         # Doesn't do anything with posted data
         self._set_headers()
+        self.send_header('Content-type', 'application/json')
         content_length = int(self.headers['Content-Length'])
         post_data = self.rfile.read(content_length)
         json_data = json.loads(post_data)
@@ -31,6 +35,14 @@ class S(BaseHTTPRequestHandler):
         if status != 200:
             json_out = write_http_error(status)
         self.wfile.write(json.dumps(json_out).encode())
+
+    def do_OPTIONS(self):
+        self.send_response(200, "ok")
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, OPTIONS')
+        self.send_header("Access-Control-Allow-Headers", "X-Requested-With")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.end_headers()
 
 def calculate(json_data):
     isValid = validate(json_data)
