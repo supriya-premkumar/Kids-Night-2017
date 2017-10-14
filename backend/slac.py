@@ -61,7 +61,7 @@ def get_result(json_data, reset):
     score = score + Ce + Cr
     out["score"] =  round(score*100, 2)/100
     out["frequency"] = round((constants["f"]+1)*60*1000,2)/1000
-    return json.dumps(out)
+    return out
 
 
 def get_constants_by_difficulty_level(difficulty_level):
