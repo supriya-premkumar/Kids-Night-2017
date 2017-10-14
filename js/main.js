@@ -35,6 +35,7 @@ function init(){
 
 function render_results(){
   var throttle = document.getElementById("throttle").value;
+  document.getElementById("percent").innerHTML=throttle;
   var url = "http://127.0.0.1:8080";
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
@@ -42,7 +43,7 @@ function render_results(){
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
         var json = JSON.parse(xhr.responseText);
-        document.getElementById("score").innerHTML = json["score"];
+        document.getElementById("score").innerHTML = parseInt(json["score"])%1000;
         rotate_guage(json["frequency"]);
     }
   };
@@ -57,10 +58,10 @@ function rotate_guage(freq) {
 		function rotateDial()
 		{
 			var deg = 0;
-			var value = Math.round((freq*100)%100);
+			var value = Math.round((freq*100)%60);
 			deg = (value * 177.5) / 100;
 
-			gauge_value.html(value + "%");
+			gauge_value.html(value);
 
 			dial.css({'transform': 'rotate('+deg+'deg)'});
 		    dial.css({'-ms-transform': 'rotate('+deg+'deg)'});
