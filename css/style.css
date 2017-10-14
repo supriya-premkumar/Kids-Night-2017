@@ -1,7 +1,7 @@
 body{
   /*background: #0099CC*/
   /*background: #D2C295*/
-  background: #FFF8DC
+  background: #FFF8DC;
 }
 
 ul{
@@ -97,5 +97,5 @@ input[type=radio]:checked + label>img {
     margin-left: 10px;
     cursor: pointer;
 
-  
+
 }
