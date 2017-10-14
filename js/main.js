@@ -43,6 +43,7 @@ function render_results(){
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
         var json = JSON.parse(xhr.responseText);
+        // XXX Remove the mod for gods sakes!
         document.getElementById("score").innerHTML = parseInt(json["score"])%1000;
         rotate_guage(json["frequency"]);
     }
@@ -58,6 +59,7 @@ function rotate_guage(freq) {
 		function rotateDial()
 		{
 			var deg = 0;
+      // XXX Same here
 			var value = Math.round((freq*100)%60);
 			deg = (value * 177.5) / 100;
 
@@ -72,19 +74,3 @@ function rotate_guage(freq) {
     rotateDial();
 
 }
-		// function rotateDial()
-		// {
-		// 	var deg = 0;
-		// 	var value = Math.round(Math.random()*100);
-		// 	deg = (value * 177.5) / 100;
-    //
-		// 	gauge_value.html(value + "%");
-    //
-		// 	dial.css({'transform': 'rotate('+deg+'deg)'});
-		//     dial.css({'-ms-transform': 'rotate('+deg+'deg)'});
-		//     dial.css({'-moz-transform': 'rotate('+deg+'deg)'});
-		//     dial.css({'-o-transform': 'rotate('+deg+'deg)'});
-		//     dial.css({'-webkit-transform': 'rotate('+deg+'deg)'});
-		// }
-
-		// setInterval(rotateDial, 2000);
