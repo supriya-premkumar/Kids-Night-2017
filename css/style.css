@@ -1,12 +1,14 @@
 body{
-  background: #93d6f4
+  /*background: #0099CC*/
+  /*background: #D2C295*/
+  background: #FFF8DC
 }
 
 ul{
      list-style-type: none;
      margin: 0;
      overflow: hidden;
-     background-color: #971d24;
+     background-color: #990000;
      position:fixed;
      top:0;
      left:0;
@@ -32,25 +34,68 @@ ul{
     margin-right: 80px;
   }
 
-.slider{
-  margin-left: 200px;
+/*.image1, .image2, .image3 {
+  height:250px;
+  width:250px;*/
+  /*padding: 1%;*/
+  /*margin-left: 200px;
   margin-top: 150px;
   position: relative;
-  align-items: center;
-}
-.image1, .image2, .image3 {
-  height:250px;
-  width:250px;
-  padding: 1%;
-  align-items: center;
+  align-items: center;*/
 
+/*}*/
+
+
+form{
+    margin-top: 100px;
+    width: 50%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: rgba(255,255,255,.5);
+    font-size: 16px;
+    resize: none;
 }
 
-.guidelines{
-  margin-top: 100px;
-  color: #971d24;
+.input-hidden {
+position: absolute;
+left: -9999px;
 }
 
-img.highlighted {
-    border: 2px solid blue;
+input[type=radio]:checked + label>img {
+  border: 1px solid #fff;
+  box-shadow: 0 0 3px 3px #090;
+}
+
+/* Stuff after this is only to make things more pretty */
+input[type=radio] + label>img {
+  border: 1px dashed #444;
+  width: 150px;
+  height: 150px;
+  transition: 500ms all;
+}
+
+input[type=radio]:checked + label>img {
+  transform:
+    rotateZ(-10deg)
+    rotateX(10deg);
+}
+
+.button{
+    background-color: #990000;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    /*display: inline-block;*/
+    font-size: 16px;
+    /*margin: 8px 4px;*/
+    margin-top: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+
+  
 }
