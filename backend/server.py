@@ -37,9 +37,11 @@ def calculate(json_data):
     if not isValid:
         json_out = json_data
         return (json_out, 400)
-    json_out = slac.get_result(json_data)
+    if "reset" in json_data:
+        json_out = slac.get_result(json_data, True)
+    else:
+        json_out = slac.get_result(json_data, False)
     return (json_out, 200)
-
 
 def validate(json_data):
     if json_data["throttle"] < 0 or json_data["throttle"] > 100:
