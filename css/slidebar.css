@@ -1,0 +1,155 @@
+@import "compass/css3";
+
+$input-bw: 4em;
+
+$track-w: 19.5em;
+$track-h: 2.25em;
+$track-bg:
+  linear-gradient(#f5f5f5, #eee 35%, #bfbfbf);
+$track-fill:
+  linear-gradient(#f8dd36, #d88606) no-repeat;
+
+$thumb-d: $track-h;
+
+$bar:
+  linear-gradient(#eabd22, #eabd22) no-repeat;
+$bar-s: 1em;
+$n-bar: 12;
+$bar-offset: $input-bw + ($track-w - $n-bar*$bar-s)/2 - $bar-s;
+$bar-h: 0em;
+$bars: ();
+$bar-sizes: ();
+
+@for $i from 0 to $n-bar {
+  $bar-offset: $bar-offset + $bar-s;
+  $bar-h: $bar-h + .0625em;
+  $bars: append($bars, $bar left $bar-offset bottom $input-bw + 1.5*$track-h, comma);
+  $bar-sizes: append($bar-sizes, .875*$bar-s $bar-h, comma);
+}
+
+@mixin track($fill: true) {
+  box-sizing: border-box;
+  border: none;
+  padding: .375em;
+  width: $track-w; height: $track-h;
+  border-radius: $track-h/2;
+  box-shadow:
+    inset 0 -1px 1px #fff,
+    inset 0 .5em .5em #c4c4c4,
+    inset 0 0 0 .375em #efefef,
+    inset 0 1px .125em .375em black,
+    inset 0 0 0 1px #eee;
+  background: $track-bg;
+
+  @if $fill {
+    .js & {
+      background: $track-fill, $track-bg;
+      background-size: 50% 100%, 100% 100%;
+    }
+  }
+}
+
+@mixin thumb() {
+  box-sizing: border-box;
+  border: none;
+  padding: .375em;
+  width: $thumb-d; height: $thumb-d;
+  border-radius: 50%;
+  box-shadow:
+    0 .375em .5em -.125em #808080,
+    inset 0 -.25em .5em -.125em #bbb;
+  background:
+    linear-gradient(#c5c5c5, #efefef)
+      content-box,
+    linear-gradient(#fdfdfd, #c4c4c4)
+      border-box;
+  cursor: ew-resize;
+}
+
+html, body { height: 100%; }
+
+html {
+  background: linear-gradient(#f8f8f8, #d9d9d9);
+}
+
+body {
+  display: flex;
+  justify-content: space-around;
+  margin: 0;
+}
+
+input[type='range'] {
+  &,
+  &::-webkit-slider-runnable-track,
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+  }
+
+  border: solid 4em transparent;
+  align-self: center;
+  padding: 0;
+  width: $track-w; height: 1.5*$track-h;
+  border-radius: .25em;
+  background: $bars;
+  background-origin: border-box;
+  background-size: $bar-sizes;
+  font-size: 1em;
+  cursor: pointer;
+
+
+  /* slider components */
+  &::-webkit-slider-runnable-track {
+    @include track();
+  }
+  &::-moz-range-track {
+    @include track();
+  }
+  &::-ms-track {
+    @include track(false);
+    color: transparent;
+  }
+  &::-ms-fill-lower {
+    border-radius: $track-h/2;
+    box-shadow: inset 0 1px .25em #777;
+    background: $track-fill;
+  }
+  &::-ms-tooltip,
+  &::-ms-fill-upper { display: none; }
+
+  &::-webkit-slider-thumb {
+    margin-top: -.375em;
+    @include thumb();
+  }
+  &::-moz-range-thumb {
+    @include thumb();
+  }
+  &::-ms-thumb {
+    @include thumb();
+  }
+
+  &::-webkit-slider-runnable-track,
+  /deep/ #track /* removed */ {
+    position: relative;
+
+    &:before, &:after {
+      position: absolute;
+      bottom: 1.1*$track-h;
+      text-transform: uppercase;
+    }
+    &:before {
+      left: 1em;
+      content: 'min';
+    }
+    &:after {
+      right: 1em;
+      text-align: right;
+      content: 'max';
+    }
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 .125em .125em #fff;
+    background-color: rgba(#fff, .32);
+  }
+}
